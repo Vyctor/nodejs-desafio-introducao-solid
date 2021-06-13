@@ -1,19 +1,19 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "RentalX Documentation",
-        "description": "This is an API Rent",
+        "title": "Atlas",
+        "description": "Essa é uma documentação sobre a Atlas API",
         "version": "1.0.0",
         "contact": {
             "email": "dev.vyctor@gmail.com"
         }
     },
     "paths": {
-        "/categories": {
+        "/users": {
             "post": {
-                "tags": ["Category"],
-                "summary": "Create a category",
-                "description": "Create a new category",
+                "tags": ["users"],
+                "summary": "Create a user",
+                "description": "Create a new user",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -23,13 +23,13 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "description": {
+                                    "email": {
                                         "type": "string"
                                     }
                                 },
                                 "example": {
-                                    "name": "Category name sample",
-                                    "description": "Category description sample"
+                                    "name": "User name sample",
+                                    "description": "User email sample"
                                 }
                             }
                         }
@@ -37,17 +37,51 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
-                    "500": {
-                        "description": "Category already exists"
+                    "400": {
+                        "description": "User already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
             "get": {
-                "tags": ["Category"],
-                "summary": "List all category",
-                "description": "List all categories",
+                "tags": ["users"],
+                "summary": "List all users",
+                "description": "List all users",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -57,10 +91,144 @@
                                 "items": {
                                     "type": "object",
                                     "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
                                         "name": {
                                             "type": "string"
                                         },
-                                        "description": {
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User doesnt exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "users/{user_id}": {
+            "get": {
+                "tags": ["users"],
+                "summary": "Find user by id",
+                "description": "Find user by id",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "users/${user_id}/admin": {
+            "put": {
+                "tags": ["users"],
+                "summary": "Update user admin",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
                                             "type": "string"
                                         }
                                     }
